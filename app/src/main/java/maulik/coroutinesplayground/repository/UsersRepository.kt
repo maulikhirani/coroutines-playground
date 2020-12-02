@@ -6,32 +6,24 @@ import maulik.coroutinesplayground.api.UsersApiService
 import maulik.coroutinesplayground.model.User
 import retrofit2.Call
 import retrofit2.Callback
+import retrofit2.HttpException
 import retrofit2.Response
+import java.lang.Exception
 
 class UsersRepository {
 
     val usersLiveData = MutableLiveData<List<User>>()
     val errorLiveData = MutableLiveData<String>()
 
-    fun getUsers() {
+    suspend fun getUsers() {
         val usersApiService = NetworkManager.retrofit.create(UsersApiService::class.java)
 
-        usersApiService.getUsers().enqueue(object : Callback<List<User>> {
-            override fun onResponse(call: Call<List<User>>,
-                                    response: Response<List<User>>) {
-                if (response.isSuccessful) {
-                    usersLiveData.value = response.body()
-                } else {
-                    errorLiveData.value = response.errorBody()?.string()
-                    usersLiveData.value = mutableListOf()
-                }
-            }
-
-            override fun onFailure(call: Call<List<User>>, t: Throwable) {
-                errorLiveData.value = t.message
-            }
-
-        })
+        try {
+            val users = usersApiService.getUsers()
+            usersLiveData.value = users
+        } catch (e: Exception) {
+            errorLiveData.value = e.message
+        }
     }
 
 }
