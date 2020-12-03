@@ -11,7 +11,7 @@ import retrofit2.Response
 class UsersRepository {
 
     val usersLiveData = MutableLiveData<List<User>>()
-    val errorLiveData = MutableLiveData<String>()
+    val errorLiveData = MutableLiveData<String>("")
 
     fun getUsers() {
         val usersApiService = NetworkManager.retrofit.create(UsersApiService::class.java)

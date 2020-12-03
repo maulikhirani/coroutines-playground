@@ -7,9 +7,9 @@ import maulik.coroutinesplayground.repository.UsersRepository
 
 class UsersViewModel: ViewModel() {
 
-    val repository = UsersRepository()
-    val usersList = repository.usersLiveData
-    val errorMessage = repository.errorLiveData
+    private val repository = UsersRepository()
+    val usersList: MutableLiveData<List<User>> = repository.usersLiveData
+    val errorMessage: MutableLiveData<String> = repository.errorLiveData
 
     fun getUsers() {
         repository.getUsers()

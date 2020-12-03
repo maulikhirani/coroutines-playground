@@ -1,12 +1,11 @@
 package maulik.coroutinesplayground.utils
 
-import android.widget.ImageView
-import androidx.databinding.BindingAdapter
-import coil.load
+import android.view.View
 
-@BindingAdapter("imageUrl")
-fun setImageFromUrl(imageView: ImageView, url: String?) {
-    imageView.load(url) {
-        crossfade(true)
-    }
+fun View.show() {
+    visibility = View.VISIBLE
+}
+
+fun View.hide() {
+    visibility = View.GONE
 }
